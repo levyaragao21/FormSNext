@@ -1,10 +1,37 @@
 "use client"
 import Image from "next/image";
 import {Eye} from "@phosphor-icons/react";
-import {Envelope} from "@phosphor-icons/react";
+import {useState} from "react";
+
 
 
 export default function Home() {
+  const [errorMessage ,  setErrorMessage ] = useState ("");
+  function validationEmail(email){
+    if (!email.includes("@")){
+      
+
+      return false;
+    }
+    if(!email.includes(".com") && !email.includes(".com.br")){
+     return false;
+    }
+     if (email.includes("@.")){
+      return false;
+     }
+     if (email[0] === "@" || email[0]=== "."){
+      return false;
+     }
+     return true;
+  }
+  function onChangeEmail(event){
+    const email = event.target.value;
+    if(validationEmail(email)){
+      setErrorMessage("");
+    } else{
+      setErrorMessage("*Email inválido, por favor insira um email válido.");
+    }
+  }
   return (
     <main className="flex min-h-screen flex-col 
     items-center justify-center p-24 max-h-screen">
@@ -43,8 +70,8 @@ export default function Home() {
 
             {/*ImputEmail */}
 
-            c
-            <input className="border-none focus:outline-none hover:bg-indigo-400 bg-gray-200 rounded-2xl placeholder-gray-500 p-4 flex-4 min-w-full " placeholder="Email"></input>
+            
+            <input onBlur={onChangeEmail} className="border-none focus:outline-none hover:bg-indigo-400 bg-gray-200 rounded-2xl placeholder-gray-500 p-4 flex-4 min-w-full " placeholder="Email"></input>
             {/* UsaFlag */}
 
 
@@ -67,6 +94,16 @@ export default function Home() {
               <Eye size={32} />
               
             </div>
+          </div>
+          <div className="text-red-600">
+            {errorMessage}
+          </div>
+
+          <div className="flex items-start px-4">
+            <span>
+              <input type="checkbox" className="mr-2 h-5 w-5 accent-[#836ef1]"></input>
+            </span>
+             <p> by checking this box you are agreein with out terms anda conditions and privacy</p>
           </div>
 
           </div>
