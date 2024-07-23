@@ -2,34 +2,29 @@
 import Image from "next/image";
 import {Eye} from "@phosphor-icons/react";
 import {useState} from "react";
+import {validationEmail} from "@/utils/validation";
+import {validatephoneNumber} from "@/utils/validation";
+import Button from "@/components/Button";
 
 
 
 export default function Home() {
   const [errorMessage ,  setErrorMessage ] = useState ("");
-  function validationEmail(email){
-    if (!email.includes("@")){
-      
-
-      return false;
-    }
-    if(!email.includes(".com") && !email.includes(".com.br")){
-     return false;
-    }
-     if (email.includes("@.")){
-      return false;
-     }
-     if (email[0] === "@" || email[0]=== "."){
-      return false;
-     }
-     return true;
-  }
-  function onChangeEmail(event){
+  
+  function onBlurEmail(event){
     const email = event.target.value;
     if(validationEmail(email)){
       setErrorMessage("");
     } else{
       setErrorMessage("*Email inválido, por favor insira um email válido.");
+    }
+  }
+  function onBlurPhoneNumber(event){
+    const phoneNumber = event.target.value;
+    if(validatephoneNumber(phoneNumber)){
+      setErrorMessage("");
+    } else{
+      setErrorMessage("*Número de telefone inválido, por favor insira um número válido.");
     }
   }
   return (
@@ -71,7 +66,7 @@ export default function Home() {
             {/*ImputEmail */}
 
             
-            <input onBlur={onChangeEmail} className="border-none focus:outline-none hover:bg-indigo-400 bg-gray-200 rounded-2xl placeholder-gray-500 p-4 flex-4 min-w-full " placeholder="Email"></input>
+            <input onBlur={onBlurEmail} className="border-none focus:outline-none hover:bg-indigo-400 bg-gray-200 rounded-2xl placeholder-gray-500 p-4 flex-4 min-w-full " placeholder="Email"></input>
             {/* UsaFlag */}
 
 
@@ -79,7 +74,7 @@ export default function Home() {
               <Image src="/assets/usaflag.png" alt="arrow" width={30} height={30} />
               <p>+1</p>
               <div className="w-[1px] h-[80%] bg-gray-400 rounded"></div>
-              <input className="flex-grow bg-transparent focus:outline-none" placeholder="Number"></input>
+              <input onBlur={onBlurPhoneNumber} className="flex-grow bg-transparent focus:outline-none" placeholder="Number"></input>
             </div>
           <div className="flex gap-2">
             <div className="h-16 w-full bg-gray-200 o rounded-xl flex items-center px-4 gap-2  hover:bg-indigo-400 " >
@@ -105,6 +100,12 @@ export default function Home() {
             </span>
              <p> by checking this box you are agreein with out terms anda conditions and privacy</p>
           </div>
+
+        
+         <Button title="Create Accont"/>
+         
+         <Button title="login"/>
+
 
           </div>
         </div>
