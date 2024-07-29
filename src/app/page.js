@@ -5,6 +5,7 @@ import {useState} from "react";
 import {validationEmail} from "@/utils/validation";
 import {validatephoneNumber} from "@/utils/validation";
 import Button from "@/components/Button";
+import { maskPhoneNumber } from "@/utils/masks";
 
 
 
@@ -22,6 +23,7 @@ export default function Home() {
   function onBlurPhoneNumber(event){
     const phoneNumber = event.target.value;
     if(validatephoneNumber(phoneNumber)){
+      event.target.value = maskPhoneNumber(phoneNumber)
       setErrorMessage("");
     } else{
       setErrorMessage("*Número de telefone inválido, por favor insira um número válido.");
@@ -103,8 +105,8 @@ export default function Home() {
 
         
          <Button title="Create Accont"/>
-         
-         <Button title="login"/>
+
+         <Button title="login "/>
 
 
           </div>
